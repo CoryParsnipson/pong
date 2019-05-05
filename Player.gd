@@ -27,7 +27,7 @@ func _process(delta):
 		velocity.y = clamp(max(velocity.y, 0.4) * 13, 0, max_speed)
 	else:
 		velocity.y /= 1.1
-		if (position.y > lower_bound.y && !disable_control):
+		if (position.y > lower_bound.y && position.y < upper_bound.y && !disable_control):
 			hitting_side = false
 		
 	position += velocity * delta
