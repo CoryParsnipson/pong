@@ -1,4 +1,4 @@
-extends Area2D
+extends KinematicBody2D
 
 export var max_speed = 1200
 export var velocity = Vector2()
@@ -9,7 +9,8 @@ var lower_bound = Vector2()
 var upper_bound = Vector2()
 var hitting_side = false
 
-var disable_control = false
+var disable_control_up = false
+var disable_control_down = false
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -21,13 +22,13 @@ func _ready():
 	upper_bound.y = screen_size.y - margin.y - $Polygon2D.polygon[2].y / 2
 
 func _process(delta):	
-	if Input.is_action_pressed("ui_up") && !disable_control:
+	if Input.is_action_pressed("ui_up") && !disable_control_up:
 		velocity.y = clamp(min(velocity.y, -0.4) * 13, -max_speed, 0)	
-	elif Input.is_action_pressed("ui_down") && !disable_control:
+	elif Input.is_action_pressed("ui_down") && !disable_control_down:
 		velocity.y = clamp(max(velocity.y, 0.4) * 13, 0, max_speed)
 	else:
 		velocity.y /= 1.1
-		if (position.y > lower_bound.y && position.y < upper_bound.y && !disable_control):
+		if (position.y > lower_bound.y && position.y < upper_bound.y && !disable_control_up && !disable_control_down):
 			hitting_side = false
 		
 	position += velocity * delta
@@ -39,13 +40,14 @@ func _process(delta):
 	if old_position.y > position.y && position.y == upper_bound.y && !hitting_side:
 		velocity.y = -1 * velocity.y / 20
 		hitting_side = true
-		disable_control = true
+		disable_control_down = true
 		$BounceTimer.start()
 	elif old_position.y < position.y && position.y == lower_bound.y && !hitting_side:
 		velocity.y = -1 * velocity.y / 20
 		hitting_side = true
-		disable_control = true
+		disable_control_up = true
 		$BounceTimer.start()
 
 func _on_Timer_timeout():
-	disable_control = false
+	disable_control_up = false
+	disable_control_down = false
