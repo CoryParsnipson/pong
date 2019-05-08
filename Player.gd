@@ -1,8 +1,11 @@
 extends KinematicBody2D
 
-export var max_speed = 1200
+export var max_speed = 600
 export var velocity = Vector2()
 export var margin = Vector2(10, 5)
+
+export var action_up = KEY_UP
+export var action_down = KEY_DOWN
 
 var screen_size = Vector2()
 var lower_bound = Vector2()
@@ -21,10 +24,10 @@ func _ready():
 	upper_bound.x = screen_size.x - margin.x - $Polygon2D.polygon[2].x / 2
 	upper_bound.y = screen_size.y - margin.y - $Polygon2D.polygon[2].y / 2
 
-func _process(delta):	
-	if Input.is_action_pressed("ui_up") && !disable_control_up:
+func _process(delta):
+	if Input.is_key_pressed(action_up) && !disable_control_up:
 		velocity.y = clamp(min(velocity.y, -0.4) * 13, -max_speed, 0)	
-	elif Input.is_action_pressed("ui_down") && !disable_control_down:
+	elif Input.is_key_pressed(action_down) && !disable_control_down:
 		velocity.y = clamp(max(velocity.y, 0.4) * 13, 0, max_speed)
 	else:
 		velocity.y /= 1.1

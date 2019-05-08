@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 12.5697, 49.9986 )
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 1
@@ -15,9 +15,11 @@ collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-max_speed = 1200
+max_speed = 600
 velocity = Vector2( 0, 0 )
 margin = Vector2( 10, 5 )
+action_up = 16777232
+action_down = 16777234
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]
 
