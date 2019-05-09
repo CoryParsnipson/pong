@@ -37,12 +37,14 @@ score_p2 = 0
 [node name="Player1" parent="." index="0" instance=ExtResource( 2 )]
 
 position = Vector2( 13.719, 301.918 )
+max_speed = 800
 action_up = 65
 action_down = 90
 
 [node name="Player2" parent="." index="1" instance=ExtResource( 2 )]
 
 position = Vector2( 1010.87, 301.918 )
+max_speed = 800
 
 [node name="Ball" parent="." index="2" instance=ExtResource( 3 )]
 

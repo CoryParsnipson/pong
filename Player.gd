@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export var max_speed = 600
+export var max_speed = 800
 export var velocity = Vector2()
 export var margin = Vector2(10, 5)
 
