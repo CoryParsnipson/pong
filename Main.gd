@@ -3,8 +3,12 @@ extends Node
 export var score_p1 = 0
 export var score_p2 = 0
 
+export var start_game_delay = 3 # in seconds
+
 var max_ball_speed = 800
 var min_ball_speed = 700
+
+var start_game_delay_curr
 
 var generate = false
 var rand_t1 = 0.0
@@ -12,10 +16,24 @@ var rand_t1 = 0.0
 func _ready():
 	start_game()
 	
-func start_game():
-	randomize()
-	
+func reset_ball():
+	start_game_delay_curr = start_game_delay
 	$Ball.position = get_viewport().size / 2
+	$Ball.velocity = Vector2()
+	
+func start_game():
+	reset_ball()
+	
+	$StartGameCountdown.show();
+
+	while (start_game_delay_curr > 0):
+		$StartGameCountdown.text = str(start_game_delay_curr)
+		$StartGameTimer.start()
+		yield($StartGameTimer, "timeout")
+	
+	$StartGameCountdown.hide();
+	
+	randomize()
 	
 	var speed = (randi() % (max_ball_speed - min_ball_speed)) + min_ball_speed
 	var dir = (2 * PI) * (1.0 - gaussian_rand(PI / 2, 0.5))
@@ -26,11 +44,17 @@ func start_game():
 	$Ball.velocity.y = sin(dir) * speed;
 
 func _on_RightGoal_body_entered(body):
+	if body.get_name() != "Ball":
+		return
+	
 	score_p1 += 1
 	$Label_P1_Score.text = str(score_p1)
 	start_game()
 
 func _on_LeftGoal_body_entered(body):
+	if body.get_name() != "Ball":
+		return
+	
 	score_p2 += 1
 	$Label_P2_Score.text = str(score_p2)
 	start_game()
@@ -52,3 +76,6 @@ func gaussian_rand(mean = 0.0, deviation = 1.0):
 	rand_t1 = sqrt(-2.0 * log(r1)) * sin(PI * 2 * r2)
 	
 	return rand_t2 * deviation + mean
+
+func _on_StartGameTimer_timeout():
+	start_game_delay_curr -= 1

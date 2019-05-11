@@ -33,6 +33,7 @@ __meta__ = {
 }
 score_p1 = 0
 score_p2 = 0
+start_game_delay = 3
 
 [node name="Player1" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -48,7 +49,7 @@ max_speed = 800
 
 [node name="Ball" parent="." index="2" instance=ExtResource( 3 )]
 
-position = Vector2( 524.244, 302.023 )
+position = Vector2( 512, 300 )
 
 [node name="TopBumper" type="StaticBody2D" parent="." index="3"]
 
@@ -184,8 +185,42 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
+[node name="StartGameCountdown" type="Label" parent="." index="10"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -106.0
+margin_right = 37.0
+margin_bottom = -31.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="StartGameTimer" type="Timer" parent="." index="11"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
 [connection signal="body_entered" from="LeftGoal" to="." method="_on_LeftGoal_body_entered"]
 
 [connection signal="body_entered" from="RightGoal" to="." method="_on_RightGoal_body_entered"]
+
+[connection signal="timeout" from="StartGameTimer" to="." method="_on_StartGameTimer_timeout"]
 
 
