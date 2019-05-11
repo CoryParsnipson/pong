@@ -5,8 +5,8 @@ export var score_p2 = 0
 
 export var start_game_delay = 3 # in seconds
 
-var max_ball_speed = 800
-var min_ball_speed = 700
+var max_ball_speed = 700
+var min_ball_speed = 600
 
 var start_game_delay_curr
 
