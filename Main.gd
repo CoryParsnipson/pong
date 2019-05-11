@@ -3,6 +3,8 @@ extends Node
 export var score_p1 = 0
 export var score_p2 = 0
 
+export var max_score = 3
+
 export var start_game_delay = 3 # in seconds
 
 var max_ball_speed = 700
@@ -14,24 +16,53 @@ var generate = false
 var rand_t1 = 0.0
 
 func _ready():
-	start_game()
+	pre_start_game()
+	
+func pre_start_game():
+	# for when the game loads up for the first time
+	$GameNodes.visible = false
+	$GameNodes/InstructionTimer.start()
+	
+func start_game():
+	$StartScreen.visible = false
+	$StartScreen/StartGameButton.disabled = true
+	
+	$GameNodes.visible = true
+	$GameNodes/GameOverMessage.hide()
+	
+	$GameNodes/RetryButton.text = "RETRY"
+	$GameNodes/RetryButton.hide()
+	$GameNodes/RetryButton.disabled = true
+		
+	# reset scores
+	score_p1 = 0
+	score_p2 = 0
+	
+	# enable paddles again
+	$GameNodes/Player1.disabled = false
+	$GameNodes/Player2.disabled = false
+	
+	$GameNodes/Player1.position.y = 300
+	$GameNodes/Player2.position.y = 300
+	
+	$GameNodes/Player1.velocity = Vector2()
+	$GameNodes/Player2.velocity = Vector2()
+	
+	reset_ball()
 	
 func reset_ball():
 	start_game_delay_curr = start_game_delay
-	$Ball.position = get_viewport().size / 2
-	$Ball.velocity = Vector2()
+	$GameNodes/Ball.position = get_viewport().size / 2
+	$GameNodes/Ball.velocity = Vector2()
 	
-func start_game():
-	reset_ball()
-	
-	$StartGameCountdown.show();
+	$GameNodes/StartGameCountdown.show()
 
 	while (start_game_delay_curr > 0):
-		$StartGameCountdown.text = str(start_game_delay_curr)
-		$StartGameTimer.start()
-		yield($StartGameTimer, "timeout")
+		$GameNodes/StartGameCountdown.text = str(start_game_delay_curr)
+		$GameNodes/StartGameTimer.start()
+		yield($GameNodes/StartGameTimer, "timeout")
 	
-	$StartGameCountdown.hide();
+	$GameNodes/StartGameCountdown.hide()
 	
 	randomize()
 	
@@ -40,24 +71,48 @@ func start_game():
 	while (abs(cos(dir)) < 0.3):
 		dir = (2 * PI) * (1.0 - gaussian_rand(PI / 2, 0.5))
 	
-	$Ball.velocity.x = cos(dir) * speed;
-	$Ball.velocity.y = sin(dir) * speed;
+	$GameNodes/Ball.velocity.x = cos(dir) * speed
+	$GameNodes/Ball.velocity.y = sin(dir) * speed
+
+func end_game(winning_player_id):
+	$GameNodes/GameOverMessage.show()
+	
+	$GameNodes/RetryButton.show()
+	$GameNodes/RetryButton.disabled = false
+	
+	$GameNodes/Player1.disabled = true
+	$GameNodes/Player2.disabled = true
+	
+	if (winning_player_id == 1):
+		$GameNodes/GameOverMessage.text += "\nPLAYER 1 WINS!"
+	elif (winning_player_id == 2):
+		$GameNodes/GameOverMessage.text += "\nPLAYER 2 WINS!"
+	else:
+		$GameNodes/GameOverMessage.text += "\nINDECISIVE!!"
 
 func _on_RightGoal_body_entered(body):
 	if body.get_name() != "Ball":
 		return
 	
 	score_p1 += 1
-	$Label_P1_Score.text = str(score_p1)
-	start_game()
+	$GameNodes/Label_P1_Score.text = str(score_p1)
+	
+	if (score_p1 >= max_score):
+		end_game(1)
+	else:
+		reset_ball()
 
 func _on_LeftGoal_body_entered(body):
 	if body.get_name() != "Ball":
 		return
 	
 	score_p2 += 1
-	$Label_P2_Score.text = str(score_p2)
-	start_game()
+	$GameNodes/Label_P2_Score.text = str(score_p2)
+	
+	if (score_p2 >= max_score):
+		end_game(2)
+	else:
+		reset_ball()
 
 func gaussian_rand(mean = 0.0, deviation = 1.0):
 	generate = !generate
@@ -79,3 +134,12 @@ func gaussian_rand(mean = 0.0, deviation = 1.0):
 
 func _on_StartGameTimer_timeout():
 	start_game_delay_curr -= 1
+
+
+func _on_NewGame_pressed():
+	start_game()
+
+
+func _on_InstructionTimer_timeout():
+	$GameNodes/Player1/P1_Instructions.visible = false
+	$GameNodes/Player2/P2_Instructions.visible = false

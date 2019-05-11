@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var max_speed = 800
 export var velocity = Vector2()
 export var margin = Vector2(10, 5)
+export var disabled = false
 
 export var action_up = KEY_UP
 export var action_down = KEY_DOWN
@@ -25,6 +26,9 @@ func _ready():
 	upper_bound.y = screen_size.y - margin.y - $Polygon2D.polygon[2].y / 2
 
 func _process(delta):
+	if disabled:
+		return
+	
 	if Input.is_key_pressed(action_up) && !disable_control_up:
 		velocity.y = clamp(min(velocity.y, -0.4) * 13, -max_speed, 0)	
 	elif Input.is_key_pressed(action_down) && !disable_control_down:

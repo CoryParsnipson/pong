@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Ball.tscn" type="PackedScene" id=3]
-[ext_resource path="res://retro.tres" type="DynamicFont" id=4]
+[ext_resource path="res://retro.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Ball.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -29,29 +29,155 @@ extents = Vector2( 10, 300 )
 
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_vertical_guides_": [ 512.9 ]
+"_edit_vertical_guides_": [  ]
 }
 score_p1 = 0
 score_p2 = 0
+max_score = 3
 start_game_delay = 3
 
-[node name="Player1" parent="." index="0" instance=ExtResource( 2 )]
+[node name="StartScreen" type="Control" parent="." index="0"]
 
-position = Vector2( 13.719, 301.918 )
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="TitleLabel" type="Label" parent="StartScreen" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+margin_top = 120.0
+margin_bottom = 185.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+text = "SPACE PONG ver 1.0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="StartGameButton" type="Button" parent="StartScreen" index="1"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -131.0
+margin_top = 37.0
+margin_right = 131.0
+margin_bottom = 113.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 2 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "START"
+flat = false
+align = 1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="GameNodes" type="Control" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Visibility" ]
+
+[node name="Player1" parent="GameNodes" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 15, 300 )
 max_speed = 800
 action_up = 65
 action_down = 90
 
-[node name="Player2" parent="." index="1" instance=ExtResource( 2 )]
+[node name="P1_Instructions" type="Label" parent="GameNodes/Player1" index="3"]
 
-position = Vector2( 1010.87, 301.918 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 20.0
+margin_top = -18.0
+margin_right = 53.0
+margin_bottom = 25.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "^ A
+v Z"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Player2" parent="GameNodes" index="1" instance=ExtResource( 3 )]
+
+position = Vector2( 1010, 300 )
 max_speed = 800
 
-[node name="Ball" parent="." index="2" instance=ExtResource( 3 )]
+[node name="P2_Instructions" type="Label" parent="GameNodes/Player2" index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -74.0
+margin_top = -25.0
+margin_right = -19.0
+margin_bottom = 23.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "UP ^
+DOWN v"
+align = 2
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Ball" parent="GameNodes" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 512, 300 )
 
-[node name="TopBumper" type="StaticBody2D" parent="." index="3"]
+[node name="TopBumper" type="StaticBody2D" parent="GameNodes" index="3"]
 
 input_pickable = false
 collision_layer = 1
@@ -61,12 +187,12 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TopBumper" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameNodes/TopBumper" index="0"]
 
 position = Vector2( 511.887, -10.0496 )
 shape = SubResource( 1 )
 
-[node name="BottomBumper" type="StaticBody2D" parent="." index="4"]
+[node name="BottomBumper" type="StaticBody2D" parent="GameNodes" index="4"]
 
 input_pickable = false
 collision_layer = 1
@@ -76,12 +202,12 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBumper" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameNodes/BottomBumper" index="0"]
 
 position = Vector2( 512.131, 610.019 )
 shape = SubResource( 2 )
 
-[node name="LeftGoal" type="Area2D" parent="." index="5"]
+[node name="LeftGoal" type="Area2D" parent="GameNodes" index="5"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -91,12 +217,12 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftGoal" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameNodes/LeftGoal" index="0"]
 
 position = Vector2( -10.1307, 300.121 )
 shape = SubResource( 3 )
 
-[node name="RightGoal" type="Area2D" parent="." index="6"]
+[node name="RightGoal" type="Area2D" parent="GameNodes" index="6"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -106,20 +232,20 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightGoal" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameNodes/RightGoal" index="0"]
 
 position = Vector2( 1034.12, 300.357 )
 shape = SubResource( 4 )
 
-[node name="Score_Divider" type="Label" parent="." index="7"]
+[node name="Score_Divider" type="Label" parent="GameNodes" index="7"]
 
 anchor_left = 0.5
 anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = -29.0
+margin_left = -30.0
 margin_top = 28.0
-margin_right = 30.0
+margin_right = 29.0
 margin_bottom = 93.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -127,7 +253,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 text = "-"
 align = 1
 valign = 1
@@ -136,7 +262,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Label_P1_Score" type="Label" parent="." index="8"]
+[node name="Label_P1_Score" type="Label" parent="GameNodes" index="8"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -152,7 +278,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 text = "0"
 align = 2
 valign = 1
@@ -161,7 +287,32 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="Label_P2_Score" type="Label" parent="." index="9"]
+[node name="StartGameCountdown" type="Label" parent="GameNodes" index="9"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -103.0
+margin_right = 37.0
+margin_bottom = -28.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+text = "0"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Label_P2_Score" type="Label" parent="GameNodes" index="10"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -177,7 +328,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 2 )
 text = "0"
 valign = 1
 percent_visible = 1.0
@@ -185,42 +336,83 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="StartGameCountdown" type="Label" parent="." index="10"]
+[node name="GameOverMessage" type="Label" parent="GameNodes" index="11"]
 
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -38.0
-margin_top = -106.0
-margin_right = 37.0
-margin_bottom = -31.0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = -1.0
+margin_right = -3.0
+margin_bottom = -1.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 4 )
-text = "0"
+custom_fonts/font = ExtResource( 2 )
+text = "GAME OVER"
 align = 1
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
+_sections_unfolded = [ "Visibility", "custom_fonts" ]
 
-[node name="StartGameTimer" type="Timer" parent="." index="11"]
+[node name="StartGameTimer" type="Timer" parent="GameNodes" index="12"]
 
 process_mode = 1
 wait_time = 1.0
 one_shot = true
 autostart = false
 
-[connection signal="body_entered" from="LeftGoal" to="." method="_on_LeftGoal_body_entered"]
+[node name="InstructionTimer" type="Timer" parent="GameNodes" index="13"]
 
-[connection signal="body_entered" from="RightGoal" to="." method="_on_RightGoal_body_entered"]
+process_mode = 1
+wait_time = 15.0
+one_shot = true
+autostart = false
 
-[connection signal="timeout" from="StartGameTimer" to="." method="_on_StartGameTimer_timeout"]
+[node name="RetryButton" type="Button" parent="GameNodes" index="14"]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -131.0
+margin_top = -91.0
+margin_right = 131.0
+margin_bottom = -20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 2 )
+disabled = true
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "RETRY"
+flat = false
+align = 1
+_sections_unfolded = [ "Visibility", "custom_fonts" ]
+
+[connection signal="pressed" from="StartScreen/StartGameButton" to="." method="_on_NewGame_pressed"]
+
+[connection signal="body_entered" from="GameNodes/LeftGoal" to="." method="_on_LeftGoal_body_entered"]
+
+[connection signal="body_entered" from="GameNodes/RightGoal" to="." method="_on_RightGoal_body_entered"]
+
+[connection signal="timeout" from="GameNodes/StartGameTimer" to="." method="_on_StartGameTimer_timeout"]
+
+[connection signal="timeout" from="GameNodes/InstructionTimer" to="." method="_on_InstructionTimer_timeout"]
+
+[connection signal="pressed" from="GameNodes/RetryButton" to="." method="_on_NewGame_pressed"]
 
 

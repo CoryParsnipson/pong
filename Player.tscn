@@ -18,6 +18,7 @@ _sections_unfolded = [ "Transform" ]
 max_speed = 600
 velocity = Vector2( 0, 0 )
 margin = Vector2( 10, 5 )
+disabled = false
 action_up = 16777232
 action_down = 16777234
 
