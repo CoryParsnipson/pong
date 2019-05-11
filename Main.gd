@@ -3,7 +3,7 @@ extends Node
 export var score_p1 = 0
 export var score_p2 = 0
 
-export var max_score = 3
+export var max_score = 10
 
 export var start_game_delay = 3 # in seconds
 
@@ -84,11 +84,11 @@ func end_game(winning_player_id):
 	$GameNodes/Player2.disabled = true
 	
 	if (winning_player_id == 1):
-		$GameNodes/GameOverMessage.text += "\nPLAYER 1 WINS!"
+		$GameNodes/GameOverMessage.text = "GAME OVER\nPLAYER 1 WINS!"
 	elif (winning_player_id == 2):
-		$GameNodes/GameOverMessage.text += "\nPLAYER 2 WINS!"
+		$GameNodes/GameOverMessage.text = "GAME OVER\nPLAYER 2 WINS!"
 	else:
-		$GameNodes/GameOverMessage.text += "\nINDECISIVE!!"
+		$GameNodes/GameOverMessage.text = "GAME OVER\nINDECISIVE!!"
 
 func _on_RightGoal_body_entered(body):
 	if body.get_name() != "Ball":

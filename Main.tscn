@@ -33,7 +33,7 @@ __meta__ = {
 }
 score_p1 = 0
 score_p2 = 0
-max_score = 3
+max_score = 10
 start_game_delay = 3
 
 [node name="StartScreen" type="Control" parent="." index="0"]
