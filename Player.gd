@@ -5,8 +5,8 @@ export var velocity = Vector2()
 export var margin = Vector2(10, 5)
 export var disabled = false
 
-export var action_up = KEY_UP
-export var action_down = KEY_DOWN
+export var action_up = "p1_up"
+export var action_down = "p1_down"
 
 var screen_size = Vector2()
 var lower_bound = Vector2()
@@ -29,9 +29,9 @@ func _process(delta):
 	if disabled:
 		return
 	
-	if Input.is_key_pressed(action_up) && !disable_control_up:
+	if Input.is_action_pressed(action_up) && !disable_control_up:
 		velocity.y = clamp(min(velocity.y, -0.4) * 13, -max_speed, 0)	
-	elif Input.is_key_pressed(action_down) && !disable_control_down:
+	elif Input.is_action_pressed(action_down) && !disable_control_down:
 		velocity.y = clamp(max(velocity.y, 0.4) * 13, 0, max_speed)
 	else:
 		velocity.y /= 1.1

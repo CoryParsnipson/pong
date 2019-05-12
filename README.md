@@ -4,7 +4,6 @@ Pong demo made in Godot
 BUGS
 ====
 
-* Fix broken KEY_Z in HTML5 export
 * Remove ability to pin ball into corner with paddle
 
 TODO

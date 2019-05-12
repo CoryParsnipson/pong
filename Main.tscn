@@ -118,8 +118,8 @@ _sections_unfolded = [ "Visibility" ]
 
 position = Vector2( 15, 300 )
 max_speed = 800
-action_up = 65
-action_down = 90
+action_up = "p1_up"
+action_down = "p1_down"
 
 [node name="P1_Instructions" type="Label" parent="GameNodes/Player1" index="3"]
 
@@ -147,7 +147,10 @@ _sections_unfolded = [ "custom_fonts" ]
 [node name="Player2" parent="GameNodes" index="1" instance=ExtResource( 3 )]
 
 position = Vector2( 1010, 300 )
+_sections_unfolded = [ "Collision", "Material", "Pause", "Pickable", "Transform", "Visibility", "collision" ]
 max_speed = 800
+action_up = "p2_up"
+action_down = "p2_down"
 
 [node name="P2_Instructions" type="Label" parent="GameNodes/Player2" index="3"]
 
@@ -176,6 +179,7 @@ max_lines_visible = -1
 [node name="Ball" parent="GameNodes" index="2" instance=ExtResource( 4 )]
 
 position = Vector2( 512, 300 )
+_sections_unfolded = [ "Collision", "Pickable", "Transform", "Visibility", "collision" ]
 
 [node name="TopBumper" type="StaticBody2D" parent="GameNodes" index="3"]
 

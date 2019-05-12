@@ -19,8 +19,8 @@ max_speed = 600
 velocity = Vector2( 0, 0 )
 margin = Vector2( 10, 5 )
 disabled = false
-action_up = 16777232
-action_down = 16777234
+action_up = "p1_up"
+action_down = "p1_down"
 
 [node name="Polygon2D" type="Polygon2D" parent="." index="0"]
 
