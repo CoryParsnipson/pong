@@ -4,5 +4,9 @@
 export.cfg
 export_presets.cfg
 
+# ignore Godot exports from export folder
+export/*
+
 # Mono-specific ignores
 .mono/
+
