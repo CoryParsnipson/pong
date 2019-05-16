@@ -118,8 +118,6 @@ _sections_unfolded = [ "Visibility" ]
 
 position = Vector2( 15, 300 )
 max_speed = 800
-action_up = "p1_up"
-action_down = "p1_down"
 
 [node name="P1_Instructions" type="Label" parent="GameNodes/Player1" index="3"]
 

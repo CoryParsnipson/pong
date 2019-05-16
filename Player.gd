@@ -34,7 +34,7 @@ func _process(delta):
 	elif Input.is_action_pressed(action_down) && !disable_control_down:
 		velocity.y = clamp(max(velocity.y, 0.4) * 13, 0, max_speed)
 	else:
-		velocity.y /= 1.1
+		velocity.y /= 1.3
 		if (position.y > lower_bound.y && position.y < upper_bound.y && !disable_control_up && !disable_control_down):
 			hitting_side = false
 		
